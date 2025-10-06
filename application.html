@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Application — PMAY-G</title>
+  <link rel="stylesheet" href="1.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding">
+        <div class="logo">🏠</div>
+        <div>
+          <h1>PMAY-G Portal</h1>
+          <p class="tag">My Application</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="interface.html">Home</a>
+        <a href="status.html" class="status-btn">Check Status</a>
+        <a href="contact.html">Contact</a>
+        <button id="logoutBtn" class="btn btn-outline">Logout</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h2 id="welcomeMsg">Loading your application...</h2>
+
+      <div id="appView" style="display:none;">
+        <form id="updateForm" class="form-grid">
+          <label>Name<input type="text" id="u_name"></label>
+          <label>Guardian<input type="text" id="u_guardian"></label>
+          <label>Age<input type="number" id="u_age"></label>
+          <label>Mobile<input type="text" id="u_mobile"></label>
+          <label>Aadhaar<input type="text" id="u_aadhaar" disabled></label>
+          <label>State<input type="text" id="u_state"></label>
+          <label>District<input type="text" id="u_district"></label>
+          <label>Address<input type="text" id="u_address"></label>
+          <label>House Type
+            <select id="u_house_type">
+              <option value="kutcha">Kutcha</option>
+              <option value="dilapidated">Dilapidated</option>
+              <option value="pucca">Pucca</option>
+            </select>
+          </label>
+          <label>Income<input type="number" id="u_income"></label>
+
+          <div class="form-actions full">
+            <button type="submit" class="btn">Update Application</button>
+          </div>
+        </form>
+
+        <p>Application ID: <span id="appId"></span></p>
+        <p>Status: <span id="appStatus"></span></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PMAY-G Self-Update Portal — Demo</p>
+    </div>
+  </footer>
+
+  <script>
+    const LS_KEY = 'pmayg_apps_v1';
+    const SESSION_KEY = 'pmayg_session';
+
+    const session = JSON.parse(localStorage.getItem(SESSION_KEY) || 'null');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const appView = document.getElementById('appView');
+
+    if(!session || session.type !== 'beneficiary'){
+      welcomeMsg.textContent = 'Please login as beneficiary first via Login page.';
+    } else {
+      const apps = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      const me = apps.find(a => a.aadhaar === session.aadhaar);
+
+      if(!me){
+        welcomeMsg.textContent = 'No application found. Please register.';
+      } else {
+        welcomeMsg.style.display='none';
+        appView.style.display='block';
+
+        // Populate fields
+        document.getElementById('u_name').value = me.name;
+        document.getElementById('u_guardian').value = me.guardian;
+        document.getElementById('u_age').value = me.age;
+        document.getElementById('u_mobile').value = me.mobile;
+        document.getElementById('u_aadhaar').value = me.aadhaar;
+        document.getElementById('u_state').value = me.state;
+        document.getElementById('u_district').value = me.district;
+        document.getElementById('u_address').value = me.address;
+        document.getElementById('u_house_type').value = me.house_type;
+        document.getElementById('u_income').value = me.income;
+        document.getElementById('appId').textContent = me.id;
+        document.getElementById('appStatus').textContent = me.status;
+
+        // Update form
+        document.getElementById('updateForm').addEventListener('submit', function(e){
+          e.preventDefault();
+          me.name = document.getElementById('u_name').value.trim();
+          me.guardian = document.getElementById('u_guardian').value.trim();
+          me.age = document.getElementById('u_age').value;
+          me.mobile = document.getElementById('u_mobile').value.trim();
+          me.state = document.getElementById('u_state').value.trim();
+          me.district = document.getElementById('u_district').value.trim();
+          me.address = document.getElementById('u_address').value.trim();
+          me.house_type = document.getElementById('u_house_type').value;
+          me.income = document.getElementById('u_income').value;
+          me.updatedAt = new Date().toISOString();
+
+          localStorage.setItem(LS_KEY, JSON.stringify(apps));
+          document.getElementById('appStatus').textContent = me.status;
+          alert('Application updated successfully.');
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function(){
+          localStorage.removeItem(SESSION_KEY);
+          window.location.href = 'login.html';
+        });
+      }
+    }
+  </script>
+</body>
+</html>

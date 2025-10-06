@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login — PMAY-G</title>
+  <link rel="stylesheet" href="1.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding">
+        <div class="logo">🏠</div>
+        <div>
+          <h1>PMAY-G Portal</h1>
+          <p class="tag">Login</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="interface.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="status.html" class="status-btn">Check Status</a>
+        <a href="admin.html" class="admin-btn">Admin</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h2>Login</h2>
+
+      <form id="loginForm" class="form-grid" autocomplete="off">
+        <label>Login Type:
+          <select id="loginType">
+            <option value="beneficiary">Beneficiary</option>
+          
+          </select>
+        </label>
+
+        <div id="beneficiaryFields">
+          <label>Aadhaar *<input type="text" id="loginAadhaar" required></label>
+          <label>Mobile *<input type="text" id="loginMobile" required></label>
+        </div>
+
+        <div id="adminFields" style="display:none;">
+          <label>Username *<input type="text" id="adminUser" required></label>
+          <label>Password *<input type="password" id="adminPass" required></label>
+        </div>
+
+        <div class="form-actions full">
+          <button class="btn" type="submit">Login</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PMAY-G Self-Update Portal </p>
+    </div>
+  </footer>
+
+  <script>
+    const LS_KEY = 'pmayg_apps_v1';
+    const SESSION_KEY = 'pmayg_session';
+
+    // Clear previous session
+    localStorage.removeItem(SESSION_KEY);
+
+    const loginType = document.getElementById('loginType');
+    const beneficiaryFields = document.getElementById('beneficiaryFields');
+    const adminFields = document.getElementById('adminFields');
+
+    // Toggle fields
+    loginType.addEventListener('change', () => {
+      if(loginType.value === 'admin') {
+        beneficiaryFields.style.display = 'none';
+        adminFields.style.display = 'block';
+      } else {
+        beneficiaryFields.style.display = 'block';
+        adminFields.style.display = 'none';
+      }
+    });
+
+    // Login handler
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Stop default form submission
+
+      const type = loginType.value;
+
+      if(type === 'beneficiary') {
+        const aadhaar = document.getElementById('loginAadhaar').value.trim();
+        const mobile = document.getElementById('loginMobile').value.trim();
+        const apps = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+        const user = apps.find(a => a.aadhaar === aadhaar && a.mobile === mobile);
+
+        if(user) {
+          localStorage.setItem(SESSION_KEY, JSON.stringify({type:'beneficiary', aadhaar}));
+          window.location.href = 'my-application.html';
+        } else {
+          alert('No matching application found. Please register first.');
+        }
+
+      } else if(type === 'admin') {
+        const username = document.getElementById('adminUser').value.trim();
+        const password = document.getElementById('adminPass').value.trim();
+
+        const ADMIN_USER = 'admin';
+        const ADMIN_PASS = 'admin123';
+
+        if(username === ADMIN_USER && password === ADMIN_PASS) {
+          localStorage.setItem(SESSION_KEY, JSON.stringify({type:'admin', user:'admin'}));
+          window.location.href = 'admin2.html'; // redirect to admin page
+        } else {
+          alert('Invalid admin credentials.');
+        }
+      }
+    });
+  </script>
+</body>
+</html>

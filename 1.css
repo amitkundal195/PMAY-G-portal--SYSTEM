@@ -1,0 +1,291 @@
+:root{
+  --gov-blue:#003366;
+  --accent:#ffd700;
+  --muted:#6b7280;
+  --bg:#f5f7fb;
+  --surface:#fff;
+}
+
+*{box-sizing:border-box}
+body{
+  font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+  background:var(--bg);
+  color:#0f172a;
+  margin:0;
+}
+.container{max-width:1100px;margin:0 auto;padding:18px}
+.site-header{background:var(--gov-blue);color:#fff}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.branding{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;background:#fff2;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px}
+.branding h1{margin:0;font-size:18px}
+.tag{font-size:12px;color:#e6eefc}
+.main-nav a{color:#fff;margin-left:14px;text-decoration:none;font-weight:600}
+.main-nav a:hover{color:var(--accent)}
+
+.hero{
+  display:flex;justify-content:space-between;align-items:center;background:linear-gradient(90deg,#eaf4ff,#fff);
+  padding:28px;border-radius:10px;margin-top:16px;
+}
+.hero h2{color:var(--gov-blue);margin:0 0 6px 0}
+.hero p{color:var(--muted);margin:0 0 12px 0}
+.hero-actions .btn{margin-right:8px}
+
+.btn{
+  background:var(--gov-blue);
+  color:#fff;
+  padding:10px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  border:none;
+  cursor:pointer;
+}
+.btn-outline{background:transparent;border:2px solid var(--gov-blue);color:var(--gov-blue)}
+
+.features{margin-top:18px}
+.cards{display:flex;gap:12px}
+.card{background:var(--surface);padding:16px;border-radius:10px;box-shadow:0 6px 14px rgba(2,6,23,0.06);flex:1}
+
+.page{background:var(--surface);padding:18px;border-radius:10px;margin-top:18px}
+
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.form-grid label{display:flex;flex-direction:column;font-size:14px}
+.form-grid label.full{grid-column:1 / -1}
+
+.form-simple{max-width:420px}
+input,select,textarea{padding:10px;border-radius:8px;border:1px solid #d1d5db}
+input:focus,textarea:focus,select:focus{outline:2px solid rgba(0,51,102,0.12)}
+
+.table-wrap{overflow:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:8px;border-bottom:1px solid #e6eef5;text-align:left}
+
+.form-actions{display:flex;gap:8px;align-items:center}
+.form-message{margin-top:10px;color:green}
+.admin-actions{margin-top:12px}
+
+/* Responsive */
+@media(max-width:800px){
+  .form-grid{grid-template-columns:1fr}
+  .main-nav{display:none}
+  .hero{flex-direction:column}
+  .cards{flex-direction:column}
+}
+/* General */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f5f8fa;
+  color: #333;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.container { max-width: 1000px; margin: auto; padding: 20px; }
+
+/* Header */
+.site-header {
+  background: #007b5e;
+  color: white;
+  padding: 15px 0;
+}
+.site-header h1 { margin: 0; font-size: 24px; }
+.site-header .tag { font-size: 14px; opacity: 0.85; }
+.main-nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+  transition: color 0.3s;
+}
+.main-nav a:hover { color: #ffd700; }
+
+/* Buttons */
+.btn {
+  background: #007b5e;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s;
+}
+.btn:hover { background: #005f45; }
+.btn-outline {
+  background: white;
+  color: #007b5e;
+  border: 1px solid #007b5e;
+}
+.btn-outline:hover {
+  background: #007b5e;
+  color: white;
+}
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+table th, table td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+table th { background: #007b5e; color: white; }
+tr:hover { background: #f1f1f1; }
+
+/* Status badges */
+.status-pending { color: #856404; background: #fff3cd; padding: 2px 6px; border-radius: 4px; }
+.status-approved { color: #155724; background: #d4edda; padding: 2px 6px; border-radius: 4px; }
+.status-rejected { color: #721c24; background: #f8d7da; padding: 2px 6px; border-radius: 4px; }
+
+/* Forms */
+form { background: white; padding: 20px; border-radius: 6px; box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+form label { display: block; margin-bottom: 10px; }
+form input, form select, form textarea { width: 100%; padding: 6px 8px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
+.form-actions { text-align: right; }
+/* New Section Headings */
+section h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: #004aad;
+}
+
+/* Lists */
+section ul {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding-left: 1.5rem;
+  color: #555;
+  font-size: 1rem;
+}
+
+section ul li {
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+/* FAQ Cards */
+.faq .cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.instructions ul, .eligibility ul {
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  margin-bottom: 2rem;
+}
+
+/* Adjust hero graphic for new look */
+.hero-graphic {
+  font-size: 6rem;
+  animation: bounce 2s infinite;
+  margin-top: 1rem;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+  40% {transform: translateY(-15px);}
+  60% {transform: translateY(-7px);}
+}
+.main-nav .status-btn {
+  background-color: #ffd700;
+  color: #004aad;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.main-nav .status-btn:hover {
+  background-color: #ffc107;
+  transform: translateY(-2px);
+}
+/* Status Section */
+.status-section {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.status-section h2 {
+  color: #004aad;
+  margin-bottom: 1rem;
+}
+
+.status-section p {
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 0.5rem;
+}
+
+.status-pending { background-color: #f0ad4e; }
+.status-approved { background-color: #28a745; }
+.status-rejected { background-color: #dc3545; }
+
+/* Progress bar container */
+.progress-container {
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  height: 25px;
+  margin: 1.5rem 0;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #004aad, #00aaff);
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  line-height: 25px;
+  transition: width 1s ease-in-out;
+}
+
+/* Back button */
+#backBtn {
+  margin-top: 1rem;
+}
+/* Remove underline from all anchor tags */
+a {
+  text-decoration: none;
+}
+
+/* Optional: add hover effect */
+a:hover {
+  text-decoration: none; /* keep underline removed on hover */
+  color: #ffd700; /* example: change color on hover */
+  transition: color 0.3s;
+}
+.main-nav .admin-btn {
+  background-color: #28a745; /* green for admin */
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-weight: bold;
+  margin-left: 0.5rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.main-nav .admin-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+
+
+
+

@@ -1,0 +1,59 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Register — PMAY-G</title>
+  <link rel="stylesheet" href="1.css">
+  <style>
+    .form-actions a {
+      text-decoration: none;
+      color: inherit; 
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding"><div class="logo">🏠</div><div><h1>PMAY-G</h1><p class="tag">Beneficiary Registration</p></div></div>
+      <nav class="main-nav"><a href="index.html">Home</a><a href="about.html">About</a><a href="register.html">Register</a><a href="login.html">Login</a></nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page form-page">
+      <h2>Beneficiary Registration</h2>
+      <p>Fill accurate details. Aadhaar and Mobile are used to log in later.</p>
+
+      <form id="registrationForm" class="form-grid">
+        <label>Full Name *<input type="text" id="name" required></label>
+        <label>Father / Husband Name<input type="text" id="guardian"></label>
+        <label>Age *<input type="number" id="age" min="18" required></label>
+        <label>Mobile Number *<input type="tel" id="mobile" pattern="[0-9]{10}" required></label>
+        <label>Aadhaar Number *<input type="text" id="aadhaar" pattern="[0-9]{12}" required></label>
+        <label>State *<input type="text" id="state" required></label>
+        <label>District *<input type="text" id="district" required></label>
+        <label class="full">Permanent Address *<textarea id="address" rows="3" required></textarea></label>
+        <label>Current House Type *
+          <select id="house_type" required>
+            <option value="">--Select--</option>
+            <option value="kutcha">Kutcha</option>
+            <option value="semi_pucca">Semi-Pucca</option>
+            <option value="dilapidated">Dilapidated</option>
+          </select>
+        </label>
+        <label>Estimated Annual Income<input type="number" id="income"></label>
+
+        <div class="form-actions full">
+          <button class="btn" type="submit"><a href="myapplication.html">Submit Application</button></a>
+          <button class="btn btn-outline" type="reset">Reset</button>
+        </div>
+      </form>
+
+      <div id="formMessage" class="form-message" aria-live="polite"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><p>© 2025 PMAY-G Demo</p></div></footer>
+  <script src="2.js"></script>
+</body>
+</html>

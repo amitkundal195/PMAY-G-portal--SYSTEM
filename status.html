@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PMAY-G Application Status</title>
+  <link rel="stylesheet" href="1.css">
+  <style>
+    /* Status Cards */
+    .status-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .status-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 1rem 1.2rem;
+      transition: transform 0.3s;
+    }
+    .status-card:hover { transform: translateY(-3px); }
+
+    .status-card h4 {
+      color: #004aad;
+      margin-bottom: 0.5rem;
+    }
+
+    .status-card p { margin: 0.3rem 0; font-size: 0.95rem; }
+
+    /* Status Badge */
+    .status-badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 6px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .pending { background-color: #f0ad4e; }
+    .approved { background-color: #28a745; }
+    .rejected { background-color: #dc3545; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding">
+        <div class="logo">🏠</div>
+        <div>
+          <h1>PMAY-G Portal</h1>
+          <p class="tag">Application Status</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="interface.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="status.html" class="status-btn">Check Status</a>
+        <a href="admin.html" class="admin-btn">Admin</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="status-section">
+      <h2>All Beneficiary Statuses</h2>
+      <p>Below are the statuses of all applications registered in the portal (Demo).</p>
+
+      <div id="statusContainer" class="status-container">
+        <!-- Status cards will be injected here via JS -->
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PMAY-G Self-Update Portal </p>
+    </div>
+  </footer>
+
+  <script>
+    const LS_KEY = 'pmayg_apps_v1';
+    const apps = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+    const container = document.getElementById('statusContainer');
+
+    if(apps.length === 0){
+      container.innerHTML = '<p>No applications found. Please register first.</p>';
+    } else {
+      apps.forEach(app => {
+        const div = document.createElement('div');
+        div.className = 'status-card';
+        div.innerHTML = `
+          <h4>${app.name} (${app.aadhaar})</h4>
+          <p>District: ${app.district}</p>
+          <p>House Type: ${app.house_type}</p>
+          <p>Status: <span class="status-badge ${app.status.toLowerCase()}">${app.status}</span></p>
+          <p>Submitted: ${new Date(app.createdAt).toLocaleDateString()}</p>
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>

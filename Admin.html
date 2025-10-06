@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — PMAY-G</title>
+  <link rel="stylesheet" href="1.css">
+</head>
+<body>
+
+  <script>
+    // ---------------- ADMIN LOGIN ----------------
+    const username = prompt('Enter admin username:');
+    const password = prompt('Enter admin password:');
+    if(username !== 'admin' || password !== 'admin123'){
+      alert('Invalid credentials! You will be redirected.');
+      window.location.href = 'interface.html'; // redirect to home
+    }
+    // No session saved, so login is required every time
+  </script>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding">
+        <div class="logo">🏠</div>
+        <div>
+          <h1>PMAY-G Admin</h1>
+          <p class="tag">Dashboard</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="interface.html">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container admin-page">
+    <section class="page">
+      <h2>Applications</h2>
+      <p>Approve, reject, view, or delete beneficiary applications.</p>
+
+      <div class="table-wrap">
+        <table id="appsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Aadhaar</th>
+              <th>District</th>
+              <th>House</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="admin-actions">
+        <button id="seedData" class="btn">Load Sample Data</button>
+        <button id="clearData" class="btn btn-outline">Clear All</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PMAY-G Demo</p>
+    </div>
+  </footer>
+
+  <script src="2.js"></script>
+  <script>
+    // ---------------- ADMIN TABLE ----------------
+    const appsTable = document.getElementById('appsTable');
+    if(appsTable){
+      const LS_KEY = 'pmayg_apps_v1';
+
+      function readApps(){ return JSON.parse(localStorage.getItem(LS_KEY) || '[]'); }
+      function writeApps(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
+
+      function renderApps(){
+        const apps = readApps();
+        const tbody = appsTable.querySelector('tbody');
+        tbody.innerHTML = '';
+        if(apps.length === 0){
+          const tr = document.createElement('tr');
+          tr.innerHTML = `<td colspan="7" style="text-align:center;">No applications found.</td>`;
+          tbody.appendChild(tr);
+          return;
+        }
+
+        apps.forEach(app=>{
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${app.id}</td>
+            <td>${app.name}</td>
+            <td>${app.aadhaar}</td>
+            <td>${app.district}</td>
+            <td>${app.house_type}</td>
+            <td>${app.status}</td>
+            <td></td>
+          `;
+          const actionTd = tr.querySelector('td:last-child');
+
+          // Approve button
+          const approveBtn = document.createElement('button');
+          approveBtn.className = 'btn';
+          approveBtn.textContent = 'Approve';
+          approveBtn.addEventListener('click', ()=>{ app.status='Approved'; writeApps(apps); renderApps(); });
+
+          // Reject button
+          const rejectBtn = document.createElement('button');
+          rejectBtn.className = 'btn btn-outline';
+          rejectBtn.textContent = 'Reject';
+          rejectBtn.addEventListener('click', ()=>{ app.status='Rejected'; writeApps(apps); renderApps(); });
+
+          // Open button (login as beneficiary to view)
+          const openBtn = document.createElement('button');
+          openBtn.className = 'btn';
+          openBtn.textContent = 'Open';
+          openBtn.addEventListener('click', ()=>{
+            localStorage.setItem('pmayg_session', JSON.stringify({type:'beneficiary', user:app}));
+            window.location.href = 'my-application.html';
+          });
+
+          // Delete button
+          const delBtn = document.createElement('button');
+          delBtn.className = 'btn btn-outline';
+          delBtn.textContent = 'Delete';
+          delBtn.addEventListener('click', ()=>{
+            if(confirm('Delete this application?')){
+              const idx = apps.findIndex(x=>x.id===app.id);
+              apps.splice(idx,1);
+              writeApps(apps);
+              renderApps();
+            }
+          });
+
+          actionTd.appendChild(approveBtn);
+          actionTd.appendChild(rejectBtn);
+          actionTd.appendChild(openBtn);
+          actionTd.appendChild(delBtn);
+          tbody.appendChild(tr);
+        });
+      }
+
+      // Seed sample data
+      document.getElementById('seedData').addEventListener('click', ()=>{
+        const sample = [
+          {id:'APP-001',name:'Ram Kumar',guardian:'Shyam',age:45,mobile:'9876543210',aadhaar:'111122223333',state:'State A',district:'District X',address:'Village Road',house_type:'kutcha',income:60000,status:'Pending',createdAt:new Date().toISOString()},
+          {id:'APP-002',name:'Sita Devi',guardian:'Ramesh',age:38,mobile:'9123456780',aadhaar:'222233334444',state:'State B',district:'District Y',address:'Haat Road',house_type:'dilapidated',income:35000,status:'Pending',createdAt:new Date().toISOString()}
+        ];
+        const apps = readApps();
+        apps.push(...sample);
+        writeApps(apps);
+        renderApps();
+      });
+
+      // Clear all applications
+      document.getElementById('clearData').addEventListener('click', ()=>{
+        if(confirm('Clear all applications?')){
+          localStorage.removeItem(LS_KEY);
+          renderApps();
+        }
+      });
+
+      renderApps(); // Initial render
+    }
+  </script>
+</body>
+</html>

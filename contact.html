@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact — PMAY-G</title>
+  <link rel="stylesheet" href="1.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="branding">
+        <div class="logo">🏠</div>
+        <div>
+          <h1>PMAY-G</h1>
+          <p class="tag">Contact</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="interface.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="status.html" class="status-btn">Check Status</a>
+        <a href="admin.html" class="admin-btn">Admin</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="page">
+      <h2>Contact & Support</h2>
+      <p>For demo support, send a message below.</p>
+
+      <form id="contactForm" class="form-grid">
+        <label>Full Name *<input type="text" name="name" id="cname" required></label>
+        <label>Email<input type="email" name="email" id="cemail"></label>
+        <label class="full">Message *<textarea name="message" id="cmessage" rows="4" required></textarea></label>
+        <div class="form-actions full"><button class="btn" type="submit">Send Message</button></div>
+      </form>
+
+      <div class="contact-info">
+        <h4>District PMAY Office</h4>
+        <p>Address: District Office Address</p>
+        <p>Phone: +91-XXXXXXXXXX</p>
+        <p>Email: amitkundal195@gmail.com</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>© 2025 PMAY-G </p>
+    </div>
+  </footer>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("YOUR_PUBLIC_KEY"); // replace with your EmailJS public key
+    })();
+
+    // Form submission
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+
+      emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this)
+        .then(() => {
+          alert('Message sent successfully!');
+          this.reset();
+        }, (err) => {
+          alert('Error sending message: ' + JSON.stringify(err));
+        });
+    });
+  </script>
+</body>
+</html>
